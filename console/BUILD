@@ -1,10 +1,13 @@
 cc_library(
-    name = 'deeznescpu',
+    name = 'deeznesconsole',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
-    include_prefix = "cpu",
+    include_prefix = "console",
     strip_include_prefix = "include",
-    visibility = ["//visibility:public"],
+    deps = [
+        "//cart:deeznescart"
+        "//cpu:deeznescpu"
+    ]
 )
 
 cc_test(
@@ -12,6 +15,6 @@ cc_test(
     srcs = glob(['test/*.cpp', 'test/*.h']),
     deps = [
         "@gtest//:gtest",
-        ":deeznescpu",
+        ":deeznesconsole",
     ],
 )
