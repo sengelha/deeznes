@@ -1,5 +1,5 @@
 cc_library(
-    name = 'deeznescart',
+    name = 'cart',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
     include_prefix = "cart",

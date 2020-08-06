@@ -1,8 +1,11 @@
 cc_library(
-    name = 'io',
+    name = 'sdlpp',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
-    include_prefix = "io",
+    deps = [
+        "@sdl2//:sdl2",
+    ],
+    include_prefix = "sdlpp",
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
 )

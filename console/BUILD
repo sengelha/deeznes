@@ -1,17 +1,18 @@
 cc_library(
-    name = 'deeznesconsole',
+    name = 'console',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
     copts = ['-std=c++17'],
+    deps = [
+        "//cart",
+        "//compat",
+        "//cpu",
+        "//io",
+        "//ppu",
+    ],
     include_prefix = "console",
     strip_include_prefix = "include",
-    deps = [
-        "//cart:deeznescart",
-        "//compat:deeznescompat",
-        "//cpu:deeznescpu",
-        "//io:deeznesio",
-        "//ppu:deeznesppu",
-    ]
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
@@ -20,7 +21,7 @@ cc_test(
     copts = ['-std=c++17'],
     deps = [
         "@gtest//:gtest",
-        ":deeznesconsole",
+        ":console",
     ],
     data = [
         "//roms:nestest.log",

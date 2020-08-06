@@ -7,3 +7,11 @@ http_archive(
     sha256 = "9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb",
     strip_prefix = "googletest-release-1.10.0",
 )
+
+http_archive(
+    name = "sdl2",
+    url = "https://www.libsdl.org/release/SDL2-2.0.12.tar.gz",
+    sha256 = "349268f695c02efbc9b9148a70b85e58cefbbf704abd3e91be654db7f1e2c863",
+    build_file = "@//external:sdl2.BUILD",
+    strip_prefix = "SDL2-2.0.12",
+)

@@ -1,5 +1,5 @@
 cc_library(
-    name = 'deeznescompat',
+    name = 'compat',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
     include_prefix = "compat",

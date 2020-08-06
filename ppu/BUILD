@@ -1,5 +1,5 @@
 cc_library(
-    name = 'deeznesppu',
+    name = 'ppu',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
     include_prefix = "ppu",
@@ -12,6 +12,6 @@ cc_test(
     srcs = glob(['test/*.cpp', 'test/*.h']),
     deps = [
         "@gtest//:gtest",
-        ":deeznesppu",
+        ":ppu",
     ],
 )
