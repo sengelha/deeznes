@@ -1,5 +1,5 @@
 #include <iostream>
-#include "m6502_opcode.h"
+#include <cpu/m6502_opcode.h>
 
 namespace deeznes {
 namespace cpu {

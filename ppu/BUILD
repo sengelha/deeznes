@@ -3,7 +3,8 @@ cc_library(
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
     include_prefix = "ppu",
-    strip_include_prefix = "include"
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
 )
 
 cc_test(

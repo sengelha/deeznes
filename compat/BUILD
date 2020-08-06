@@ -1,8 +1,8 @@
 cc_library(
-    name = 'deeznescart',
+    name = 'deeznescompat',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
-    include_prefix = "cart",
+    include_prefix = "compat",
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
 )

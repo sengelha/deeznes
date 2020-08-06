@@ -1,4 +1,4 @@
-#include "m6502_disassembler.h"
+#include <cpu/m6502_disassembler.h>
 
 namespace deeznes {
 namespace cpu {

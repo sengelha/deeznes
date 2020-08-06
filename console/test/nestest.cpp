@@ -201,7 +201,7 @@ print_state(ostream &os, nes_console &console)
 TEST(console_rom_tests, nestest)
 {
 	nes_console console;
-	console.insert_cart("nestest.nes");
+	console.insert_cart("roms/nestest.nes");
 	console.power_on();
 
 	// nestest.log tests a specific subroutine of nestest that starts at $C000
@@ -225,7 +225,7 @@ TEST(console_rom_tests, nestest)
 	//binder.writeu8(0x4015, 0xFF);
 
 	ifstream logf;
-	logf.open("nestest.log");
+	logf.open("roms/nestest.log");
 	ASSERT_TRUE(logf.is_open());
 
 	std::string expected;
