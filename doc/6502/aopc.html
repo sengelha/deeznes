@@ -1,0 +1,950 @@
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="Author" content="Jindroush">
+ <meta name="Generator" content="DoHtml Perl Generator(c) Jindroush">
+ <title>
+   6502 Opcodes
+ </title>
+</head>
+<body text="#FFFFFF" bgcolor="#000000" link="#FF0000" vlink="#C0C0C0" alink="#3366FF">
+
+
+<table border CELLSPACING=0 CELLPADDING=3 width="100%" BGCOLOR="#000099"><TR><TD><FONT SIZE="+3">&nbsp;6502 Opcodes</FONT></TD></TR></table><P>
+<h4>by<table width="100%"  border="0">
+  <tr>
+    <td valign="top"> John Picken</h4>
+
+<a name="TOC">&nbsp;</a>
+<h2>INDEX</h2>
+<p>
+<tt>
+<table border=2 width="90%" cellpadding=2>
+<tr>
+<td align="center">
+<a href="#ADC">ADC</a></td>
+<td align=center>
+<a href="#AND">AND</a></td>
+<td align=center>
+<a href="#ASL">ASL</a></td>
+<td align=center>
+<a href="#BCC">BCC</a></td>
+<td align=center>
+<a href="#BCS">BCS</a></td>
+<td align=center>
+<a href="#BEQ">BEQ</a></td>
+<td align=center>
+<a href="#BIT">BIT</a></td>
+<td align=center>
+<a href="#BMI">BMI</a></td>
+<td align=center>
+<a href="#BNE">BNE</a></td>
+<td align=center>
+<a href="#BPL">BPL</a></td>
+<td align=center>
+<a href="#BRK">BRK</a></td>
+<td align=center>
+<a href="#BVC">BVC</a></td>
+<td align=center>
+<a href="#BVS">BVS</a></td>
+<td align=center>
+<a href="#CLC">CLC</a></td>
+</tr>
+
+<tr>
+<td align=center>
+<a href="#CLD">CLD</a></td>
+<td align=center>
+<a href="#CLI">CLI</a></td>
+<td align=center>
+<a href="#CLV">CLV</a></td>
+<td align=center>
+<a href="#CMP">CMP</a></td>
+<td align=center>
+<a href="#CPX">CPX</a></td>
+<td align=center>
+<a href="#CPY">CPY</a></td>
+<td align=center>
+<a href="#DEC">DEC</a></td>
+<td align=center>
+<a href="#DEX">DEX</a></td>
+<td align=center>
+<a href="#DEY">DEY</a></td>
+<td align=center>
+<a href="#EOR">EOR</a></td>
+<td align=center>
+<a href="#INC">INC</a></td>
+<td align=center>
+<a href="#INX">INX</a></td>
+<td align=center>
+<a href="#INY">INY</a></td>
+<td align=center>
+<a href="#JMP">JMP</a></td>
+</tr>
+
+<tr>
+<td align=center>
+<a href="#JSR">JSR</a></td>
+<td align=center>
+<a href="#LDA">LDA</a></td>
+<td align=center>
+<a href="#LDX">LDX</a></td>
+<td align=center>
+<a href="#LDY">LDY</a></td>
+<td align=center>
+<a href="#LSR">LSR</a></td>
+<td align=center>
+<a href="#NOP">NOP</a></td>
+<td align=center>
+<a href="#ORA">ORA</a></td>
+<td align=center>
+<a href="#PHA">PHA</a></td>
+<td align=center>
+<a href="#PHP">PHP</a></td>
+<td align=center>
+<a href="#PLA">PLA</a></td>
+<td align=center>
+<a href="#PLP">PLP</a></td>
+<td align=center>
+<a href="#ROL">ROL</a></td>
+<td align=center>
+<a href="#ROR">ROR</a></td>
+<td align=center>
+<a href="#RTI">RTI</a></td>
+</tr>
+
+<tr>
+<td align=center>
+<a href="#RTS">RTS</a></td>
+<td align=center>
+<a href="#SBC">SBC</a></td>
+<td align=center>
+<a href="#SEC">SEC</a></td>
+<td align=center>
+<a href="#SED">SED</a></td>
+<td align=center>
+<a href="#SEI">SEI</a></td>
+<td align=center>
+<a href="#STA">STA</a></td>
+<td align=center>
+<a href="#STX">STX</a></td>
+<td align=center>
+<a href="#STY">STY</a></td>
+<td align=center>
+<a href="#TAX">TAX</a></td>
+<td align=center>
+<a href="#TAY">TAY</a></td>
+<td align=center>
+<a href="#TSX">TSX</a></td>
+<td align=center>
+<a href="#TXA">TXA</a></td>
+<td align=center>
+<a href="#TXS">TXS</a></td>
+<td align=center>
+<a href="#TYA">TYA</a></td>
+</tr>
+
+</table>
+<p>
+<table border=2 width="90%" cellpadding=2>
+<tr>
+<td align=center>
+<a href="#BRA">Branches</a></td>
+<td align=center>
+<a href="#DFLAG">Decimal Mode</a></td>
+<td align=center>
+<a href="#IFLAG">Interrupt Flag</a></td>
+<td align=center>
+<a href="#VFLAG">Overflow Flag</a></td>
+<td align=center>
+<a href="#PC">Program Counter</a></td>
+<td align=center>
+<a href="#STACK">Stack</a></td>
+<td align=center>
+<a href="#TIMES">Times</a></td>
+<td align=center>
+<a href="#WRAP">Wrap-around</a></td>
+</tr>
+</table>
+</tt>
+
+<p>
+<a name="ADC">&nbsp;</a>
+<h2>ADC (ADd with Carry)</h2>
+<p>
+Affects Flags: S V Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     ADC #$44      $69  2   2
+Zero Page     ADC $44       $65  2   3
+Zero Page,X   ADC $44,X     $75  2   4
+Absolute      ADC $4400     $6D  3   4
+Absolute,X    ADC $4400,X   $7D  3   4+
+Absolute,Y    ADC $4400,Y   $79  3   4+
+Indirect,X    ADC ($44,X)   $61  2   6
+Indirect,Y    ADC ($44),Y   $71  2   5+
+
++ add 1 cycle if page boundary crossed
+
+</pre>
+ADC results are dependant on the setting of the <a
+href="#DFLAG">decimal flag</a>. In decimal mode, addition is
+carried out on the assumption that the values involved are packed
+BCD (Binary Coded Decimal).<p>
+There is no way to add without carry.
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="AND">&nbsp;</a>
+<h2>AND (bitwise AND with accumulator) 
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     AND #$44      $29  2   2
+Zero Page     AND $44       $25  2   2
+Zero Page,X   AND $44,X     $35  2   3
+Absolute      AND $4400     $2D  3   4
+Absolute,X    AND $4400,X   $3D  3   4+
+Absolute,Y    AND $4400,Y   $39  3   4+
+Indirect,X    AND ($44,X)   $21  2   6
+Indirect,Y    AND ($44),Y   $31  2   5+
+
++ add 1 cycle if page boundary crossed
+</pre>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="ASL">&nbsp;</a>
+<h2>ASL (Arithmetic Shift Left)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Accumulator   ASL A         $0A  1   2
+Zero Page     ASL $44       $06  2   5
+Zero Page,X   ASL $44,X     $16  2   6
+Absolute      ASL $4400     $0E  3   6
+Absolute,X    ASL $4400,X   $1E  3   7
+
+</pre>
+ASL shifts all bits left one position. 0 is shifted into bit 0 and
+the original bit 7 is shifted into the Carry.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="BIT">&nbsp;</a>
+<h2>BIT (test BITs)
+</h2>
+<p>
+Affects Flags: N V Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Zero Page     BIT $44       $24  2   3
+Absolute      BIT $4400     $2C  3   4
+
+</pre>
+BIT sets the Z flag as though the value in the address tested were
+ANDed with the accumulator. The S and V flags are set to match bits
+7 and 6 respectively in the value stored at the tested address. <p>
+BIT is often used to skip one or two following bytes as in: <p>
+<pre>
+CLOSE1 LDX #$10   If entered here, we
+       .BYTE $2C  effectively perform
+CLOSE2 LDX #$20   a BIT test on $20A2,
+       .BYTE $2C  another one on $30A2,
+CLOSE3 LDX #$30   and end up with the X
+CLOSEX LDA #12    register still at $10
+       STA ICCOM,X upon arrival here.
+
+</pre>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="BCC">&nbsp;</a>
+<a name="BCS">&nbsp;</a>
+<a name="BEQ">&nbsp;</a>
+<a name="BNE">&nbsp;</a>
+<a name="BMI">&nbsp;</a>
+<a name="BPL">&nbsp;</a>
+<a name="BVC">&nbsp;</a>
+<a name="BVS">&nbsp;</a>
+<a name="BRA">&nbsp;</a>
+<h2>Branch Instructions</h2>
+<p>
+Affect Flags: none
+<p>
+All branches are relative mode and have a length of two bytes.
+Syntax is "Bxx Displacement" or (better) "Bxx Label". See the notes
+on the <a href="#PC">Program Counter</a> for more on displacements.
+<p>
+Branches are dependant on the status of the flag bits when the op
+code is encountered. A branch not taken requires two machine
+cycles. Add one if the branch is taken and add one more if the
+branch crosses a page boundary.
+<pre>
+MNEMONIC                       HEX
+BPL (Branch on PLus)           $10
+BMI (Branch on MInus)          $30
+BVC (Branch on oVerflow Clear) $50
+BVS (Branch on oVerflow Set)   $70
+BCC (Branch on Carry Clear)    $90
+BCS (Branch on Carry Set)      $B0
+BNE (Branch on Not Equal)      $D0
+BEQ (Branch on EQual)          $F0
+
+</pre>
+There is no BRA (BRanch Always) instruction but it can be easily
+emulated by branching on the basis of a known condition. One of the
+best flags to use for this purpose is the <a href="#VFLAG">
+oVerflow</a> which is unchanged by all but addition
+and subtraction operations.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="BRK">&nbsp;</a>
+<h2>BRK (BReaK)
+</h2>
+<p>
+Affects Flags: B
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Implied       BRK           $00  1   7
+
+</pre>
+BRK causes a non-maskable interrupt and increments the program
+counter by two. Therefore an <a href="#RTI">RTI</a> will go to the
+address of the BRK +3 so that BRK may be used to replace a three-
+byte instruction for debugging and the subsequent RTI will be
+correct. If BRK is used in place of a one- or two-byte op code, the
+controlling software will have to adjust the RTI appropriately. <p>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="CMP">&nbsp;</a>
+<h2>CMP (CoMPare accumulator)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     CMP #$44      $C9  2   2
+Zero Page     CMP $44       $C5  2   3
+Zero Page,X   CMP $44,X     $D5  2   4
+Absolute      CMP $4400     $CD  3   4
+Absolute,X    CMP $4400,X   $DD  3   4+
+Absolute,Y    CMP $4400,Y   $D9  3   4+
+Indirect,X    CMP ($44,X)   $C1  2   6
+Indirect,Y    CMP ($44),Y   $D1  2   5+
+
++ add 1 cycle if page boundary crossed
+
+</pre>
+Compare sets flags as if a subtraction had been carried out. If the
+value in the accumulator is equal or greater than the compared
+value, the Carry will be set. The equal (Z) and sign (S) flags will
+be set based on equality or lack thereof and the sign (i.e. A&gt;=$80)
+of the accumulator. <p>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="CPX">&nbsp;</a>
+<h2>CPX (ComPare X register)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     CPX #$44      $E0  2   2
+Zero Page     CPX $44       $E4  2   3
+Absolute      CPX $4400     $EC  3   4
+
+</pre>
+Operation and flag results are identical to equivalent mode
+accumulator <a href="#CMP">CMP</a> ops. <p>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="CPY">&nbsp;</a>
+<h2>CPY (ComPare Y register)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     CPY #$44      $C0  2   2
+Zero Page     CPY $44       $C4  2   3
+Absolute      CPY $4400     $CC  3   4
+
+</pre>
+Operation and flag results are identical to equivalent mode
+accumulator <a href="#CMP">CMP</a> ops. <p>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="DEC">&nbsp;</a>
+<h2>DEC (DECrement memory)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Zero Page     DEC $44       $C6  2   5
+Zero Page,X   DEC $44,X     $D6  2   6
+Absolute      DEC $4400     $CE  3   6
+Absolute,X    DEC $4400,X   $DE  3   7
+
+</pre>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="EOR">&nbsp;</a>
+<h2>EOR (bitwise Exclusive OR)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     EOR #$44      $49  2   2
+Zero Page     EOR $44       $45  2   3
+Zero Page,X   EOR $44,X     $55  2   4
+Absolute      EOR $4400     $4D  3   4
+Absolute,X    EOR $4400,X   $5D  3   4+
+Absolute,Y    EOR $4400,Y   $59  3   4+
+Indirect,X    EOR ($44,X)   $41  2   6
+Indirect,Y    EOR ($44),Y   $51  2   5+
+
++ add 1 cycle if page boundary crossed
+</pre>
+<a href="#TOC">Return To Index</a>
+<p>
+<a name="CLC">&nbsp;</a>
+<a name="SEC">&nbsp;</a>
+<a name="CLD">&nbsp;</a>
+<a name="SED">&nbsp;</a>
+<a name="CLI">&nbsp;</a>
+<a name="SEI">&nbsp;</a>
+<a name="CLV">&nbsp;</a>
+<h2>Flag (Processor Status) Instructions</h2>
+<p>
+Affect Flags: as noted
+<p>
+These instructions are implied mode, have a length of one byte and
+require two machine cycles.
+<pre>
+MNEMONIC                       HEX
+CLC (CLear Carry)              $18
+SEC (SEt Carry)                $38
+CLI (CLear Interrupt)          $58
+SEI (SEt Interrupt)            $78
+CLV (CLear oVerflow)           $B8
+CLD (CLear Decimal)            $D8
+SED (SEt Decimal)              $F8
+
+</pre>
+Notes:
+<p>
+<a name="IFLAG">&nbsp;</a>
+The Interrupt flag is used to prevent (SEI) or enable (CLI)
+maskable interrupts (aka IRQ's). It does not signal the presence or
+absence of an interrupt condition. The 6502 will set this flag
+automatically in response to an interrupt and restore it to its
+prior status on completion of the interrupt service routine. If you
+want your interrupt service routine to permit other maskable
+interrupts, you must clear the I flag in your code. <p>
+<a name="DFLAG">&nbsp;</a>
+The Decimal flag controls how the 6502 adds and subtracts. If set,
+arithmetic is carried out in packed binary coded decimal. This flag
+is unchanged by interrupts and is unknown on power-up. The
+implication is that a CLD should be included in boot or interrupt
+coding. <p>
+<a name="VFLAG">&nbsp;</a>
+The Overflow flag is generally misunderstood and therefore under-
+utilised. Following addition or subtraction, the overflow will
+equal the EOR (exclusive or) of the Carry and Sign flags. This flag
+is not affected by increments, decrements, shifts and logical
+operations i.e. only ADC, SBC, CLV, PLP and RTI affect it. There is
+no op code to set the overflow but a BIT test on an RTS instruction
+will do the trick.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="INC">&nbsp;</a>
+<h2>INC (INCrement memory)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Zero Page     INC $44       $E6  2   5
+Zero Page,X   INC $44,X     $F6  2   6
+Absolute      INC $4400     $EE  3   6
+Absolute,X    INC $4400,X   $FE  3   7
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="JMP">&nbsp;</a>
+<h2>JMP (JuMP)
+</h2>
+<p>
+Affects Flags: none
+<pre>
+
+MODE           SYNTAX       HEX LEN TIM
+Absolute      JMP $5597     $4C  3   3 
+Indirect      JMP ($5597)   $6C  3   5 
+
+</pre>
+JMP transfers program execution to the following address (absolute)
+or to the location contained in the following address (indirect).
+Note that there is no carry associated with the indirect jump so:
+<pre>
+<h3>AN INDIRECT JUMP MUST NEVER USE A</h3>
+<h3>VECTOR BEGINNING ON THE LAST BYTE</h3>
+<h3>OF A PAGE</h3>
+</pre>
+For example if address $3000 contains $40, $30FF contains $80, and
+$3100 contains $50, the result of JMP ($30FF) will be a transfer of
+control to $4080 rather than $5080 as you intended i.e. the 6502
+took the low byte of the address from $30FF and the high byte from
+$3000.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="JSR">&nbsp;</a>
+<h2>JSR (Jump to SubRoutine)
+</h2>
+<p>
+Affects Flags: none
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Absolute      JSR $5597     $20  3   6 
+
+</pre>
+JSR pushes the address-1 of the next operation on to the stack
+before transferring program control to the following address.
+Subroutines are normally terminated by a <a href="#RTS">RTS</a> op
+code.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="LDA">&nbsp;</a>
+<h2>LDA (LoaD Accumulator)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     LDA #$44      $A9  2   2
+Zero Page     LDA $44       $A5  2   3
+Zero Page,X   LDA $44,X     $B5  2   4
+Absolute      LDA $4400     $AD  3   4
+Absolute,X    LDA $4400,X   $BD  3   4+
+Absolute,Y    LDA $4400,Y   $B9  3   4+
+Indirect,X    LDA ($44,X)   $A1  2   6
+Indirect,Y    LDA ($44),Y   $B1  2   5+
+
++ add 1 cycle if page boundary crossed
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="LDX">&nbsp;</a>
+<h2>LDX (LoaD X register)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     LDX #$44      $A2  2   2
+Zero Page     LDX $44       $A6  2   3
+Zero Page,Y   LDX $44,Y     $B6  2   4
+Absolute      LDX $4400     $AE  3   4
+Absolute,Y    LDX $4400,Y   $BE  3   4+
+
++ add 1 cycle if page boundary crossed
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="LDY">&nbsp;</a>
+<h2>LDY (LoaD Y register)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     LDY #$44      $A0  2   2
+Zero Page     LDY $44       $A4  2   3
+Zero Page,X   LDY $44,X     $B4  2   4
+Absolute      LDY $4400     $AC  3   4
+Absolute,X    LDY $4400,X   $BC  3   4+
+
++ add 1 cycle if page boundary crossed
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="LSR">&nbsp;</a>
+<h2>LSR (Logical Shift Right)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Accumulator   LSR A         $4A  1   2
+Zero Page     LSR $44       $46  2   5
+Zero Page,X   LSR $44,X     $56  2   6
+Absolute      LSR $4400     $4E  3   6
+Absolute,X    LSR $4400,X   $5E  3   7
+
+</pre>
+LSR shifts all bits right one position. 0 is shifted into bit 7 and
+the original bit 0 is shifted into the Carry.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="WRAP">&nbsp;</a>
+<h2>Wrap-Around</h2>
+<p>
+Use caution with indexed zero page operations as they are subject
+to wrap-around. For example, if the X register holds $FF and you
+execute LDA $80,X you will not access $017F as you might expect;
+instead you access $7F i.e. $80-1. This characteristic can be used
+to advantage but make sure your code is well commented. <p>
+In cases where you are writing code that will be relocated you must
+consider wrap-around when assigning dummy values for addresses that
+will be adjusted. Both zero and the semi-standard $FFFF should be
+avoided for dummy labels. The use of zero or zero page values will
+result in  assembled code with zero page opcodes when you wanted
+absolute codes. With $FFFF, the problem is in addresses+1 as you
+wrap around to page 0. <p>
+
+<a name="PC">&nbsp;</a>
+<h2>Program Counter</h2>
+<p>
+When the 6502 is ready for the next instruction it increments the
+program counter before fetching the instruction. Once it has the op
+code, it increments the program counter by the length of the
+operand, if any. This must be accounted for when calculating
+branches or when pushing bytes to create a false return address
+(i.e. jump table addresses are made up of addresses-1 when it is
+intended to use an RTS rather than a JMP). <p>
+The program counter is loaded least signifigant byte first.
+Therefore the most signifigant byte must be pushed first when
+creating a false return address. <p>
+When calculating branches a forward branch of 6 skips the following
+6 bytes so, effectively the program counter points to the address
+that is 8 bytes beyond the address of the branch opcode; and a
+backward branch of $FA (256-6) goes to an address 7 bytes before
+the branch instruction. <p>
+
+<a name="TIMES">&nbsp;</a>
+<h2>Execution Times</h2>
+<p>
+Op code execution times are measured in machine cycles, one of
+which equals two clock cycles. Many instructions require one extra
+cycle for execution if a page boundary is crossed; these are
+indicated by a + following the time values shown.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="NOP">&nbsp;</a>
+<h2>NOP (No OPeration)
+</h2>
+<p>
+Affects Flags: none
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Implied       NOP           $EA  1   2
+
+</pre>
+NOP is used to reserve space for future modifications or
+effectively REM out existing code.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="ORA">&nbsp;</a>
+<h2>ORA (bitwise OR with Accumulator)
+</h2>
+<p>
+Affects Flags: S Z
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     ORA #$44      $09  2   2
+Zero Page     ORA $44       $05  2   2
+Zero Page,X   ORA $44,X     $15  2   3
+Absolute      ORA $4400     $0D  3   4
+Absolute,X    ORA $4400,X   $1D  3   4+
+Absolute,Y    ORA $4400,Y   $19  3   4+
+Indirect,X    ORA ($44,X)   $01  2   6
+Indirect,Y    ORA ($44),Y   $11  2   5+
+
++ add 1 cycle if page boundary crossed
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="TAX">&nbsp;</a>
+<a name="TXA">&nbsp;</a>
+<a name="TAY">&nbsp;</a>
+<a name="TYA">&nbsp;</a>
+<a name="INX">&nbsp;</a>
+<a name="DEX">&nbsp;</a>
+<a name="INY">&nbsp;</a>
+<a name="DEY">&nbsp;</a>
+<h2>Register Instructions
+</h2>
+<p>
+Affect Flags: S Z
+<p>
+These instructions are implied mode, have a length of one byte and
+require two machine cycles.
+<pre>
+MNEMONIC                 HEX
+TAX (Transfer A to X)    $AA
+TXA (Transfer X to A)    $8A
+DEX (DEcrement X)        $CA
+INX (INcrement X)        $E8
+TAY (Transfer A to Y)    $A8
+TYA (Transfer Y to A)    $98
+DEY (DEcrement Y)        $88
+INY (INcrement Y)        $C8
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="ROL">&nbsp;</a>
+<h2>ROL (ROtate Left)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Accumulator   ROL A         $2A  1   2
+Zero Page     ROL $44       $26  2   5
+Zero Page,X   ROL $44,X     $36  2   6
+Absolute      ROL $4400     $2E  3   6
+Absolute,X    ROL $4400,X   $3E  3   7
+
+</pre>
+ROL shifts all bits left one position. The Carry is shifted into
+bit 0 and the original bit 7 is shifted into the Carry.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="ROR">&nbsp;</a>
+<h2>ROR (ROtate Right)
+</h2>
+<p>
+Affects Flags: S Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Accumulator   ROR A         $6A  1   2
+Zero Page     ROR $44       $66  2   5
+Zero Page,X   ROR $44,X     $76  2   6
+Absolute      ROR $4400     $6E  3   6
+Absolute,X    ROR $4400,X   $7E  3   7
+
+</pre>
+ROR shifts all bits right one position. The Carry is shifted into
+bit 7 and the original bit 0 is shifted into the Carry.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="RTI">&nbsp;</a>
+<h2>RTI (ReTurn from Interrupt)
+</h2>
+<p>
+Affects Flags: all
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Implied       RTI           $40  1   6
+
+</pre>
+RTI retrieves the Processor Status Word (flags) and the Program
+Counter from the stack in that order (interrupts push the PC first
+and then the PSW). <p>
+Note that unlike RTS, the return address on the stack is the actual
+address rather than the address-1.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="RTS">&nbsp;</a>
+<h2>RTS (ReTurn from Subroutine)
+</h2>
+<p>
+Affects Flags: none
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Implied       RTS           $60  1   6 
+
+</pre>
+RTS pulls the top two bytes off the stack (low byte first) and
+transfers program control to that address+1. It is used, as
+expected, to exit a subroutine invoked via <a href="#JSR">JSR</a>
+which pushed the address-1. <p>
+RTS is frequently used to implement a jump table where addresses-1
+are pushed onto the stack and accessed via RTS eg. to access the
+second of four routines:
+<pre>
+ LDX #1
+ JSR EXEC
+ JMP SOMEWHERE
+
+LOBYTE
+ .BYTE &lt;ROUTINE0-1,&lt;ROUTINE1-1
+ .BYTE &lt;ROUTINE2-1,&lt;ROUTINE3-1
+
+HIBYTE
+ .BYTE &gt;ROUTINE0-1,&gt;ROUTINE1-1
+ .BYTE &gt;ROUTINE2-1,&gt;ROUTINE3-1
+
+EXEC
+ LDA HIBYTE,X
+ PHA
+ LDA LOBYTE,X
+ PHA
+ RTS
+</pre>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="SBC">&nbsp;</a>
+<h2>SBC (SuBtract with Carry)</h2>
+<p>
+Affects Flags: S V Z C
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Immediate     SBC #$44      $E9  2   2
+Zero Page     SBC $44       $E5  2   3
+Zero Page,X   SBC $44,X     $F5  2   4
+Absolute      SBC $4400     $ED  3   4
+Absolute,X    SBC $4400,X   $FD  3   4+
+Absolute,Y    SBC $4400,Y   $F9  3   4+
+Indirect,X    SBC ($44,X)   $E1  2   6
+Indirect,Y    SBC ($44),Y   $F1  2   5+
+
++ add 1 cycle if page boundary crossed
+
+</pre>
+SBC results are dependant on the setting of the decimal flag. In
+decimal mode, subtraction is carried out on the assumption that the
+values involved are packed BCD (Binary Coded Decimal). <p>
+There is no way to subtract without the carry which works as an
+inverse borrow. i.e, to subtract you set the carry before the
+operation. If the carry is cleared by the operation, it indicates
+a borrow occurred.
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="STA">&nbsp;</a>
+<h2>STA (STore Accumulator)
+</h2>
+<p>
+Affects Flags: none
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Zero Page     STA $44       $85  2   3
+Zero Page,X   STA $44,X     $95  2   4
+Absolute      STA $4400     $8D  3   4
+Absolute,X    STA $4400,X   $9D  3   5
+Absolute,Y    STA $4400,Y   $99  3   5
+Indirect,X    STA ($44,X)   $81  2   6
+Indirect,Y    STA ($44),Y   $91  2   6
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="TXS">&nbsp;</a>
+<a name="TSX">&nbsp;</a>
+<a name="PHA">&nbsp;</a>
+<a name="PLA">&nbsp;</a>
+<a name="PHP">&nbsp;</a>
+<a name="PLP">&nbsp;</a>
+<a name="STACK">&nbsp;</a>
+<h2>Stack Instructions</h2>
+<p>
+These instructions are implied mode, have a length of one byte and
+require machine cycles as indicated. The "PuLl" operations are
+known as "POP" on most other microprocessors. With the 6502, the
+stack is always on page one ($100-$1FF) and works top down.
+<pre>
+MNEMONIC                        HEX TIM
+TXS (Transfer X to Stack ptr)   $9A  2 
+TSX (Transfer Stack ptr to X)   $BA  2 
+PHA (PusH Accumulator)          $48  3 
+PLA (PuLl Accumulator)          $68  4 
+PHP (PusH Processor status)     $08  3 
+PLP (PuLl Processor status)     $28  4 
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="STX">&nbsp;</a>
+<h2>STX (STore X register)</h2>
+<p>
+Affects Flags: none
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Zero Page     STX $44       $86  2   3
+Zero Page,Y   STX $44,Y     $96  2   4
+Absolute      STX $4400     $8E  3   4
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+<p>
+<a name="STY">&nbsp;</a>
+<h2>STY (STore Y register)</h2>
+<p>
+Affects Flags: none
+<pre>
+MODE           SYNTAX       HEX LEN TIM
+Zero Page     STY $44       $84  2   3
+Zero Page,X   STY $44,X     $94  2   4
+Absolute      STY $4400     $8C  3   4
+</pre>
+<p>
+<a href="#TOC">Return To Index</a>
+<p>
+
+<IMG SRC="/jindroush.atari.org/data/other/rainbow.gif" WIDTH="100%" alt=".">
+
+
+<a href="atari.html">Back</a>&nbsp;(c) 1998-2004 Jindroush&nbsp;<font size=-4>Last modified: Tue Jan  2 15:40:54 2001</font>
+</td>
+    <td valign="top">
+<script type="text/javascript"><!--
+google_ad_client = "pub-5397458105427469";
+google_ad_width = 120;
+google_ad_height = 600;
+google_ad_format = "120x600_as";
+google_ad_type = "text_image";
+google_ad_channel = "";
+google_color_border = "0066CC";
+google_color_bg = "000000";
+google_color_link = "FFFF66";
+google_color_text = "FFFFCC";
+google_color_url = "CAF99B";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+  </tr>
+</table></BODY></HTML>
