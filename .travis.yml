@@ -9,5 +9,5 @@ addons:
       - bazel
       - libboost-dev
 script:
-  - CC=clang bazel build --noshow_progress //...
-  - CC=clang bazel test --noshow_progress //...
+  - CC=clang bazel build --noshow_progress //... || travis_terminate 1;
+  - CC=clang bazel test --noshow_progress //... || travis_terminate 1;
