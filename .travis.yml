@@ -1,31 +1,13 @@
-language: cpp
-
-matrix:
-  include:
-  - name: "Clang on Linux (Debug)"
-    os: linux
-    compiler: clang
-    addons:
-      apt:
-        packages:
-        - libboost-all-dev
-        - libsdl2-dev
-    script:
-    - ./build.sh --clean -t Debug
-  - name: "Clang on OS X (Debug)"
-    os: osx
-    compiler: clang
-    addons:
-      homebrew:
-        packages:
-        - boost
-        - sdl2
-    script:
-    - ./build.sh --clean -t Debug
-  - name: "Clang on Windows (Debug)"
-    os: windows
-    compiler: clang
-    install:
-    - choco install ninja
-    script:
-    - cmd /c "./build.cmd /c"
+dist: bionic
+compiler: clang
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8'
+        key_url: 'https://bazel.build/bazel-release.pub.gpg'
+    packages:
+      - bazel
+      - libboost-dev
+script:
+  - CC=clang bazel build --noshow_progress //...
+  - CC=clang bazel test --noshow_progress //...
