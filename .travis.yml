@@ -1,0 +1,31 @@
+language: cpp
+
+matrix:
+  include:
+  - name: "Clang on Linux (Debug)"
+    os: linux
+    compiler: clang
+    addons:
+      apt:
+        packages:
+        - libboost-all-dev
+        - libsdl2-dev
+    script:
+    - ./build.sh --clean -t Debug
+  - name: "Clang on OS X (Debug)"
+    os: osx
+    compiler: clang
+    addons:
+      homebrew:
+        packages:
+        - boost
+        - sdl2
+    script:
+    - ./build.sh --clean -t Debug
+  - name: "Clang on Windows (Debug)"
+    os: windows
+    compiler: clang
+    install:
+    - choco install ninja
+    script:
+    - cmd /c "./build.cmd /c"
