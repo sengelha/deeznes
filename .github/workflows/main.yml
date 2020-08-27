@@ -22,16 +22,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-    - name: Install bazelisk
-      run: |
-        curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
-        mkdir -p "${GITHUB_WORKSPACE}/bin/"
-        mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
-        chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
+      - name: Install bazelisk
+        run: |
+          curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
+          mkdir -p "${GITHUB_WORKSPACE}/bin/"
+          mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
+          chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
 
-    - name: Build
-      run: |
-        "${GITHUB_WORKSPACE}/bin/bazel" build //...
+      - name: Build
+        run: |
+          "${GITHUB_WORKSPACE}/bin/bazel" build //...
 
-    - name: clang-format lint
-      uses: DoozyX/clang-format-lint-action@v0.8
+      - name: clang-format lint
+        uses: DoozyX/clang-format-lint-action@v0.8
