@@ -1,9 +1,7 @@
 #pragma once
 
-namespace deeznes
-{
-namespace cpu
-{
+namespace deeznes {
+namespace cpu {
 
 constexpr uint8_t carry_flag = 0x01;
 constexpr uint8_t zero_flag = 0x02;
