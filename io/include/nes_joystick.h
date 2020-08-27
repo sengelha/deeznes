@@ -1,14 +1,11 @@
 #pragma once
 
-namespace deeznes
-{
-namespace io
-{
+namespace deeznes {
+namespace io {
 
-class nes_joystick
-{
+class nes_joystick {
 public:
-	uint8_t reg;
+  uint8_t reg;
 };
 
 } // namespace io

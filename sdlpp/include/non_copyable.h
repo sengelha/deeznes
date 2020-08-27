@@ -1,20 +1,17 @@
 #pragma once
 
-namespace deeznes
-{
-namespace sdlpp
-{
+namespace deeznes {
+namespace sdlpp {
 
-class non_copyable 
-{
-public: 
-   non_copyable (const non_copyable &) = delete;
-   non_copyable & operator = (const non_copyable &) = delete;
+class non_copyable {
+public:
+  non_copyable(const non_copyable &) = delete;
+  non_copyable &operator=(const non_copyable &) = delete;
 
 protected:
-   non_copyable () = default;
-   ~non_copyable () = default; /// Protected non-virtual destructor
+  non_copyable() = default;
+  ~non_copyable() = default; /// Protected non-virtual destructor
 };
 
-}
-}
+} // namespace sdlpp
+} // namespace deeznes
