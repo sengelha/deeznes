@@ -1,15 +1,17 @@
 #pragma once
 
+#include <cstdint>
+
 namespace deeznes {
 namespace cpu {
 
 struct m6502_registers {
-  uint8_t A;
-  uint8_t P;
-  uint8_t X;
-  uint8_t Y;
-  uint8_t S;
-  uint16_t PC;
+  std::uint8_t A;
+  std::uint8_t P;
+  std::uint8_t X;
+  std::uint8_t Y;
+  std::uint8_t S;
+  std::uint16_t PC;
 };
 
 } // namespace cpu
