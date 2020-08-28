@@ -25,6 +25,12 @@ jobs:
       - name: clang-format lint
         uses: DoozyX/clang-format-lint-action@v0.8
 
+      - name: Install boost-dev
+        run: sudo apt-get install -y libboost-all-dev
+      
+      - name: Install SDL2
+        run: sudo apt-get install -y libsdl2-dev
+
       - name: Install bazelisk
         run: |
           curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.6.1/bazelisk-linux-amd64"
@@ -34,4 +40,4 @@ jobs:
 
       - name: Build
         run: |
-          "${GITHUB_WORKSPACE}/bin/bazel" build //...
+          CC=clang "${GITHUB_WORKSPACE}/bin/bazel" build //...

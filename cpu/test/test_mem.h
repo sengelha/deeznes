@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <cpu/m6502.h>
 
 class test_mem : public deeznes::cpu::m6502_callbacks {
