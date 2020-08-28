@@ -1,12 +1,15 @@
-# Use our custom-configured c++ toolchain.
-
-build:clang_config --crosstool_top=//toolchain:clang_suite
-
-# Use --cpu as a differentiator.
-
-build:clang_config --cpu=k8
-
-# Use the default Bazel C++ toolchain to build the tools used during the
-# build.
-
-build:clang_config --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+build --copt="-Wall"
+build --copt="-Wextra"
+build --copt="-Wshadow"
+build --copt="-Wnon-virtual-dtor"
+build --copt="-Wold-style-cast"
+build --copt="-Wcast-align"
+build --copt="-Wunused"
+build --copt="-Woverloaded-virtual"
+build --copt="-Wpedantic"
+build --copt="-Wconversion"
+build --copt="-Wsign-conversion"
+build --copt="-Wmisleading-indentation"
+build --copt="-Wnull-dereference"
+build --copt="-Wdouble-promotion"
+build --copt="-Wformat=2"
