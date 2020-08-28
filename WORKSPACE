@@ -20,7 +20,6 @@ new_local_repository(
     build_file = "@//external/sdl2:sdl2.BUILD"
 )
 
-
 # http_archive(
 #     name = "sdl2",
 #     url = "https://www.libsdl.org/release/SDL2-2.0.12.tar.gz",
