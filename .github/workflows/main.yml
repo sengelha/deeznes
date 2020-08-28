@@ -27,6 +27,9 @@ jobs:
 
       - name: Install boost-dev
         run: sudo apt-get install -y libboost-all-dev
+      
+      - name: Install SDL2
+        run: sudo apt-get install -y libsdl2-dev
 
       - name: Install bazelisk
         run: |
