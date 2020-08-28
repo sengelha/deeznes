@@ -1,5 +1,5 @@
 cc_library(
-   name = "lib",
+   name = "libSDL2",
    srcs = ["libSDL2.a"],
    visibility = ["//visibility:public"],
 )
