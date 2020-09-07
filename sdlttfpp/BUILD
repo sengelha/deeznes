@@ -1,15 +1,19 @@
 cc_library(
-    name = "sdlpp",
+    name = "sdlttfpp",
     srcs = glob([
         "src/*.cpp",
         "src/*.h",
     ]),
     hdrs = glob(["include/*.h"]),
-    include_prefix = "sdlpp",
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++17"],
+    }),
+    include_prefix = "sdlttfpp",
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = [
+        "//sdlpp",
         "@boost//:format",
-        "@sdl2//:SDL2_lib",
+        "@sdl2ttf",
     ],
 )

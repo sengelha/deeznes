@@ -8,6 +8,7 @@ using namespace deeznes::cpu;
 #define ARRAYSIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
 
+/*
 TEST(cpu_nonstd_instr, dcpabs) {
   uint8_t instr[] = {0xCF, 0x00, 0x00};
   uint8_t mem[0x1000] = {0x02};
@@ -1040,3 +1041,4 @@ TEST(cpu_nonstd_instr, srezpx) {
   ASSERT_FALSE(cpu.state().regs.P & zero_flag);
   ASSERT_EQ(6, cpu.state().cycles);
 }
+*/

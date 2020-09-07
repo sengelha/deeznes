@@ -5,6 +5,7 @@
 namespace deeznes {
 namespace cpu {
 
+// TODO: rename to aluop
 enum class m6502_opcode {
   ADC,
   AND,
