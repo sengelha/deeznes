@@ -1,5 +1,6 @@
-build --copt="-Wall"
-build --copt="-Wextra"
+build --compiler=clang-cl
+#build --copt="-Wall"
+#build --copt="-Wextra"
 #build --copt="-Wshadow"
 #build --copt="-Wnon-virtual-dtor"
 #build --copt="-Wold-style-cast"

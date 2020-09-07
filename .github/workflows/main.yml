@@ -15,7 +15,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -24,12 +24,6 @@ jobs:
 
       - name: clang-format lint
         uses: DoozyX/clang-format-lint-action@v0.8
-
-      - name: Install boost-dev
-        run: sudo apt-get install -y libboost-all-dev
-      
-      - name: Install SDL2
-        run: sudo apt-get install -y libsdl2-dev
 
       - name: Install bazelisk
         run: |

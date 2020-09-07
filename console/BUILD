@@ -2,7 +2,9 @@ cc_library(
     name = 'console',
     srcs = glob(['src/*.cpp', 'src/*.h']),
     hdrs = glob(['include/*.h']),
-    copts = ['-std=c++17'],
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++17"],
+    }),
     deps = [
         "//cart",
         "//compat",
@@ -18,7 +20,9 @@ cc_library(
 cc_test(
     name = 'test',
     srcs = glob(['test/*.cpp', 'test/*.h']),
-    copts = ['-std=c++17'],
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++17"],
+    }),
     deps = [
         "@gtest//:gtest",
         ":console",

@@ -22,9 +22,6 @@ int main(int argc, char *argv[]) {
     sdl_window win("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
     sdl_renderer renderer = win.create_renderer(
         -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    sdl_surface surface = sdl_surface::load_bmp("hello.bmp");
-    sdl_texture texture = renderer.create_texture_from_surface(surface);
-    surface.free();
 
     nes_console c;
     c.insert_cart(argv[1]);
@@ -45,7 +42,6 @@ int main(int argc, char *argv[]) {
       }
 
       renderer.clear();
-      renderer.copy(texture, NULL, NULL);
       renderer.present();
 
       std::cout << c << '\n';
