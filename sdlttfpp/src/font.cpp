@@ -15,6 +15,12 @@ font::font(const char *file, int ptsize) {
     }
 }
 
+font::~font() {
+    if (m_font) {
+        TTF_CloseFont(m_font);
+    }
+}
+
 sdlpp::surface font::render_text_solid(const std::string &text, SDL_Color fg) {
     SDL_Surface *s = TTF_RenderText_Solid(m_font, text.c_str(), fg);
     if (!s) {

@@ -14,6 +14,7 @@ class font : private boost::noncopyable {
 
   public:
     font(const char *file, int ptsize);
+    ~font();
     sdlpp::surface render_text_solid(const std::string &text, SDL_Color fg);
     sdlpp::surface render_text_shaded(const std::string &text, SDL_Color fg,
                                       SDL_Color bg);

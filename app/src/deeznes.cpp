@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
             }
 
             c.run(1);
+
             for (auto &w : windows) {
                 w->render();
             }
