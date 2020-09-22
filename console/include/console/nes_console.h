@@ -3,8 +3,8 @@
 #include "console_cpu_binder.h"
 #include "console_ppu_binder.h"
 #include "nes_console_state.h"
+#include <optional>
 #include <cart/nes_cart.h>
-#include <compat/optional.h>
 #include <cpu/m6502.h>
 #include <io/nes_joystick.h>
 #include <iostream>

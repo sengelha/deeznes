@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <boost/core/noncopyable.hpp>
 #include <boost/format.hpp>
 #include <stdexcept>

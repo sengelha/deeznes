@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <boost/core/noncopyable.hpp>
 #include <sdlpp/sdlpp.h>
 #include <string_view>

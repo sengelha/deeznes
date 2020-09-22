@@ -1,7 +1,7 @@
 #pragma once
 
 #include "renderer.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <boost/format.hpp>
 #include <stdexcept>
 
