@@ -16,3 +16,10 @@ target_link_libraries(deeznesconsole
                       deeznesppu)
 target_compile_features(deeznesconsole PRIVATE
                         cxx_std_17)
+
+include(GoogleTest)
+file(GLOB CONSOLETEST_SRC test/*.cpp)
+add_executable(consoletest ${CONSOLETEST_SRC})
+target_link_libraries(consoletest PRIVATE deeznesconsole GTest::gtest)
+target_compile_features(consoletest PRIVATE cxx_std_17)
+gtest_discover_tests(consoletest)

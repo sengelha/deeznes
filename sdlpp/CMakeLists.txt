@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (deeznessdlpp)
 
-find_package(SDL2 CONFIG REQUIRED)
-
 file(GLOB DEEZNESSDLPP_SRC src/*.cpp)
 
 add_library(deeznessdlpp ${DEEZNESSDLPP_SRC})

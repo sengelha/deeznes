@@ -20,6 +20,7 @@ include(CPack)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2-ttf CONFIG REQUIRED)
 find_package(Boost 1.73.0 REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 
 enable_testing()
 
