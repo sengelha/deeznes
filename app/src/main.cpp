@@ -9,7 +9,8 @@ namespace app = deeznes::app;
 namespace cart = deeznes::cart;
 namespace console = deeznes::console;
 
-const int RENDER_STEP_COUNT = 1000;
+const int CYCLE_BATCH_SIZE = 1000;
+const int RENDER_STEP_COUNT = 10000;
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
 
         if (step || !paused)
         {
-            c.run(1);
+            c.run(step ? 1 : CYCLE_BATCH_SIZE);
             instrDisplay.update();
             step = false;
         }

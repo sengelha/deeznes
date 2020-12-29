@@ -30,8 +30,8 @@ uint8_t console_cpu_binder::readu8(uint16_t address) const {
              console_->cart_) {
     return console_->cart_->readu8(address);
   } else {
-    throw std::runtime_error(
-      (boost::format("Unable to read from address $%04X") % address).str());
+    std::cerr << boost::format("WARNING: Unable to read from address $%04X") % address << "\n";
+    return 0;
   }
 }
 
@@ -58,8 +58,7 @@ void console_cpu_binder::writeu8(uint16_t address, uint8_t val) {
              console_->cart_) {
     console_->cart_->writeu8(address, val);
   } else {
-    throw std::runtime_error(
-      (boost::format("Unable to write to address $%04X") % address).str());
+    std::cerr << boost::format("WARNING: Unable to write to address $%04X") % address << "\n";
   }
 }
 
