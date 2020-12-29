@@ -17,14 +17,14 @@ int main(int argc, char *argv[]) {
     c.insert_cart(argv[1]);
     c.power_on();
 
-    sf::RenderWindow w(sf::VideoMode(1400, 1200), "deeznes");
+    sf::RenderWindow w(sf::VideoMode(1700, 1200), "deeznes");
     //w.setVerticalSyncEnabled(true);
 
     app::cpu_display cpuDisplay(c);
-    cpuDisplay.setPosition(1000, 0);
+    cpuDisplay.setPosition(1300, 0);
 
     app::instr_display instrDisplay(c);
-    instrDisplay.setPosition(0, 1000);
+    instrDisplay.setPosition(0, 890);
 
     while (w.isOpen()) {
         sf::Event event;
@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
         }
 
         c.run(1);
+        instrDisplay.update();
 
         w.clear();
         w.draw(cpuDisplay);
