@@ -12,6 +12,7 @@ cc_binary(
     copts = default_copts,
     deps = [
         "//console",
+        "@boost//:circular_buffer",
         "@sfml",
     ],
     data = [
