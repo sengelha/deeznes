@@ -14,4 +14,7 @@ cc_binary(
         "//console",
         "@sfml",
     ],
+    data = [
+        "//fonts:CascadiaCode.ttf",
+    ],
 )

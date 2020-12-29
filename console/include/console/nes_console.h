@@ -41,8 +41,8 @@ class nes_console {
     void set_state(const nes_console_state &state);
     nes_console_state state() const;
 
-    bool should_render() const;
-    void render_to(sf::RenderWindow &win);
+    bool should_draw() const;
+    void draw_to(sf::RenderTarget &tgt);
 
     friend std::ostream &operator<<(std::ostream &os,
                                     const nes_console &console);

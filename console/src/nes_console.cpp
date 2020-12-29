@@ -206,16 +206,15 @@ nes_console_state nes_console::state() const {
     return state;
 }
 
-bool nes_console::should_render() const {
+bool nes_console::should_draw() const {
     // TODO: Base this on whether we're on the PPU scanline
-    auto state = cpu_.state();
-    return (state.cycles % 1000) == 0;
+    return true;
 }
 
-void nes_console::render_to(sf::RenderWindow &win) {
+void nes_console::draw_to(sf::RenderTarget &tgt) {
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-    win.draw(shape);
+    tgt.draw(shape);
 }
 
 } // namespace console

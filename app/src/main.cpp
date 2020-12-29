@@ -1,7 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <boost/format.hpp>
 #include <console/nes_console.h>
+#include "cpu_display.h"
+#include "instr_display.h"
 
+namespace app = deeznes::app;
 namespace console = deeznes::console;
 
 int main(int argc, char *argv[]) {
@@ -14,22 +17,28 @@ int main(int argc, char *argv[]) {
     c.insert_cart(argv[1]);
     c.power_on();
 
-    sf::RenderWindow mainwin(sf::VideoMode(640, 480), "deeznes");
-    mainwin.setVerticalSyncEnabled(true);
+    sf::RenderWindow w(sf::VideoMode(1400, 1200), "deeznes");
+    //w.setVerticalSyncEnabled(true);
 
-    while (mainwin.isOpen()) {
+    app::cpu_display cpuDisplay(c);
+    cpuDisplay.setPosition(1000, 0);
+
+    app::instr_display instrDisplay(c);
+    instrDisplay.setPosition(0, 1000);
+
+    while (w.isOpen()) {
         sf::Event event;
-        while (mainwin.pollEvent(event)) {
+        while (w.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
-                mainwin.close();
+                w.close();
         }
 
         c.run(1);
-        if (c.should_render()) {
-            mainwin.clear();
-            c.render_to(mainwin);
-            mainwin.display();
-        }
+
+        w.clear();
+        w.draw(cpuDisplay);
+        w.draw(instrDisplay);
+        w.display();
     }
 
     return 0;
