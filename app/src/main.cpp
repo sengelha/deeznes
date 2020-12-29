@@ -4,6 +4,7 @@
 #include <console/nes_console.h>
 #include "cpu_display.h"
 #include "instr_display.h"
+#include "pat_table_display.h"
 
 namespace app = deeznes::app;
 namespace cart = deeznes::cart;
@@ -32,6 +33,9 @@ int main(int argc, char *argv[]) {
 
     app::instr_display instrDisplay(c);
     instrDisplay.setPosition(0, 890);
+
+    app::pat_table_display patTableDisplay(c);
+    patTableDisplay.setPosition(0, 600);
 
     bool paused = false;
     bool step = false;
@@ -80,6 +84,7 @@ int main(int argc, char *argv[]) {
             w.clear();
             w.draw(cpuDisplay);
             w.draw(instrDisplay);
+            w.draw(patTableDisplay);
             w.display();
             render_counter = RENDER_STEP_COUNT;
         }
