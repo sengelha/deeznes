@@ -9,6 +9,17 @@ git_repository(
     shallow_since = "1606155806 -0800",
 )
 
+http_archive(
+    name = "boost",
+    build_file = "@com_github_nelhage_rules_boost//:BUILD.boost",
+    patch_cmds = ["rm -f doc/pdf/BUILD"],
+    sha256 = "aeb26f80e80945e82ee93e5939baebdca47b9dee80a07d3144be1e1a6a66dd6a",
+    strip_prefix = "boost_1_75_0",
+    urls = [
+        "https://dl.bintray.com/boostorg/release/1.75.0/source/boost_1_75_0.tar.gz",
+    ],
+)
+
 load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 
 boost_deps()
