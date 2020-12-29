@@ -5,7 +5,7 @@ namespace deeznes {
 namespace console {
 
 void console_ppu_binder::vblank_nmi() {
-    throw std::runtime_error("TODO");
+    // TODO
 }
 
 } // namespace console
