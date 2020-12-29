@@ -1,3 +1,4 @@
+#include <boost/format.hpp>
 #include <cart/nes_cart.h>
 #include <cassert>
 #include <iostream>
@@ -8,6 +9,7 @@
 #endif
 
 using namespace std;
+using boost::format;
 
 namespace deeznes {
 namespace cart {
@@ -36,6 +38,10 @@ RAM circuit) 9: Flags 9 10: Flags 10 (unofficial) 11-15: Zero filled
 nes_cart::nes_cart(const char *filename) {
   std::ifstream cartf;
   cartf.open(filename, ios::in | ios::binary);
+  if (!cartf.is_open()) {
+    boost::format fmt = format("Could not open cart file %1%") % filename;
+    throw std::runtime_error(fmt.str());
+  }
 
   char header[16];
   cartf.read(header, ARRAYSIZE(header));

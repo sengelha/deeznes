@@ -8,12 +8,14 @@ using namespace deeznes::cpu;
 #define ARRAYSIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
 
-/*
 TEST(cpu_nonstd_instr, dcpabs) {
   uint8_t instr[] = {0xCF, 0x00, 0x00};
   uint8_t mem[0x1000] = {0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000, .regs.A = 0x04, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -29,8 +31,11 @@ TEST(cpu_nonstd_instr, dcpabx) {
   uint8_t instr[] = {0xDF, 0x00, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x04, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -46,8 +51,11 @@ TEST(cpu_nonstd_instr, dcpaby) {
   uint8_t instr[] = {0xDB, 0x00, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x04, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -63,8 +71,11 @@ TEST(cpu_nonstd_instr, dcpixx) {
   uint8_t instr[] = {0xC3, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x04, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -80,8 +91,11 @@ TEST(cpu_nonstd_instr, dcpixy) {
   uint8_t instr[] = {0xD3, 0x00};
   uint8_t mem[0x1000] = {0x01, 0x00, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x04, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -97,7 +111,10 @@ TEST(cpu_nonstd_instr, dcpzpg) {
   uint8_t instr[] = {0xC7, 0x00};
   uint8_t mem[0x1000] = {0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000, .regs.A = 0x04, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -113,8 +130,11 @@ TEST(cpu_nonstd_instr, dcpzpx) {
   uint8_t instr[] = {0xD7, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x04, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x04;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -130,8 +150,11 @@ TEST(cpu_nonstd_instr, isbabs) {
   uint8_t instr[] = {0xEF, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xFF, .regs.P = 0x01, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -149,11 +172,12 @@ TEST(cpu_nonstd_instr, isbabx) {
   uint8_t instr[] = {0xFF, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000,
-                       .regs.A = 0xFF,
-                       .regs.X = 1,
-                       .regs.P = 0x01,
-                       .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.X = 1;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -171,11 +195,12 @@ TEST(cpu_nonstd_instr, isbaby) {
   uint8_t instr[] = {0xFB, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000,
-                       .regs.A = 0xFF,
-                       .regs.Y = 1,
-                       .regs.P = 0x01,
-                       .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.Y = 1;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -193,11 +218,12 @@ TEST(cpu_nonstd_instr, isbixx) {
   uint8_t instr[] = {0xE3, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000,
-                       .regs.A = 0xFF,
-                       .regs.X = 1,
-                       .regs.P = 0x01,
-                       .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.X = 1;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -215,11 +241,12 @@ TEST(cpu_nonstd_instr, isbixy) {
   uint8_t instr[] = {0xF3, 0x00};
   uint8_t mem[0x1000] = {0x01, 0x00, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000,
-                       .regs.A = 0xFF,
-                       .regs.Y = 1,
-                       .regs.P = 0x01,
-                       .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.Y = 1;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -237,8 +264,11 @@ TEST(cpu_nonstd_instr, isbzpg) {
   uint8_t instr[] = {0xE7, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xFF, .regs.P = 0x01, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -256,11 +286,12 @@ TEST(cpu_nonstd_instr, isbzpx) {
   uint8_t instr[] = {0xF7, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000,
-                       .regs.A = 0xFF,
-                       .regs.X = 1,
-                       .regs.P = 0x01,
-                       .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xFF;
+  state.regs.X = 1;
+  state.regs.P = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -278,8 +309,11 @@ TEST(cpu_nonstd_instr, laxabs) {
   uint8_t instr[] = {0xAF, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x80};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0, .regs.X = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0;
+  state.regs.X = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -295,8 +329,12 @@ TEST(cpu_nonstd_instr, laxaby) {
   uint8_t instr[] = {0xBF, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x80};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0, .regs.X = 0, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0;
+  state.regs.X = 0;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -312,8 +350,11 @@ TEST(cpu_nonstd_instr, laxixx) {
   uint8_t instr[] = {0xA3, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0x80};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -330,7 +371,10 @@ TEST(cpu_nonstd_instr, laxixy) {
   uint8_t mem[0x1000] = {0x01, 0x00, 0x80, 0xFF, 0x00};
   mem[0x100] = 0xFF;
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -355,8 +399,11 @@ TEST(cpu_nonstd_instr, laxzpg) {
   uint8_t instr[] = {0xA7, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0x80};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0, .regs.X = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0;
+  state.regs.X = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -372,8 +419,12 @@ TEST(cpu_nonstd_instr, laxzpy) {
   uint8_t instr[] = {0xB7, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x80};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0, .regs.X = 0, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0;
+  state.regs.X = 0;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -389,7 +440,9 @@ TEST(cpu_nonstd_instr, nopabs) {
   uint8_t instr[] = {0x0C, 0x00, 0x00};
   uint8_t mem[] = {0x00};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -406,7 +459,10 @@ TEST(cpu_nonstd_instr, nopabx) {
     };
     uint8_t mem[0x1000] = {0x00};
     test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-    m6502_state state = {.regs.PC = 0xC000, .regs.X = 1, .cycles = 0};
+    m6502_state state;
+    state.regs.PC = 0xC000;
+    state.regs.X = 1;
+    state.cycles = 0;
     m6502 cpu(state, &c);
     cpu.run(1);
     ASSERT_EQ(4, cpu.state().cycles);
@@ -422,7 +478,9 @@ TEST(cpu_nonstd_instr, nopimm) {
   uint8_t instr[] = {0x80, 0x00};
   uint8_t mem[] = {0x00};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -437,7 +495,10 @@ TEST(cpu_nonstd_instr, nopimp) {
     uint8_t instr[] = {nopimp_opcodes[i]};
     uint8_t mem[0x1000] = {0x00};
     test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-    m6502_state state = {.regs.PC = 0xC000, .regs.X = 1, .cycles = 0};
+    m6502_state state;
+    state.regs.PC = 0xC000;
+    state.regs.X = 1;
+    state.cycles = 0;
     m6502 cpu(state, &c);
     cpu.run(1);
     ASSERT_EQ(2, cpu.state().cycles);
@@ -452,7 +513,9 @@ TEST(cpu_nonstd_instr, nopzpg) {
     uint8_t instr[] = {nopzpg_opcodes[i], 0x00};
     uint8_t mem[0x1000] = {0x00};
     test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-    m6502_state state = {.regs.PC = 0xC000, .cycles = 0};
+    m6502_state state;
+    state.regs.PC = 0xC000;
+    state.cycles = 0;
     m6502 cpu(state, &c);
     cpu.run(1);
     ASSERT_EQ(3, cpu.state().cycles);
@@ -467,7 +530,10 @@ TEST(cpu_nonstd_instr, nopzpx) {
     uint8_t instr[] = {nopzpx_opcodes[i], 0x00, nopzpx_opcodes[i], 0xFF};
     uint8_t mem[0x1000] = {0x00};
     test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-    m6502_state state = {.regs.PC = 0xC000, .regs.X = 1, .cycles = 0};
+    m6502_state state;
+    state.regs.PC = 0xC000;
+    state.regs.X = 1;
+    state.cycles = 0;
     m6502 cpu(state, &c);
     cpu.run(1);
     ASSERT_EQ(4, cpu.state().cycles);
@@ -483,8 +549,12 @@ TEST(cpu_nonstd_instr, rlaabs) {
   uint8_t instr[] = {0x2F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -501,8 +571,12 @@ TEST(cpu_nonstd_instr, rlaabx) {
   uint8_t instr[] = {0x3F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -519,8 +593,12 @@ TEST(cpu_nonstd_instr, rlaaby) {
   uint8_t instr[] = {0x3B, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.Y = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.Y = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -537,8 +615,12 @@ TEST(cpu_nonstd_instr, rlaixx) {
   uint8_t instr[] = {0x23, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -555,8 +637,12 @@ TEST(cpu_nonstd_instr, rlaixy) {
   uint8_t instr[] = {0x33, 0x00};
   uint8_t mem[0x1000] = {0x01, 0x00, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.Y = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.Y = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -573,8 +659,12 @@ TEST(cpu_nonstd_instr, rlazpg) {
   uint8_t instr[] = {0x27, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -591,8 +681,12 @@ TEST(cpu_nonstd_instr, rlazpx) {
   uint8_t instr[] = {0x37, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x7F};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xEF, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xEF;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -609,8 +703,12 @@ TEST(cpu_nonstd_instr, rraabs) {
   uint8_t instr[] = {0x6F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -627,8 +725,12 @@ TEST(cpu_nonstd_instr, rraabx) {
   uint8_t instr[] = {0x7B, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.Y = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.Y = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -645,8 +747,12 @@ TEST(cpu_nonstd_instr, rraaby) {
   uint8_t instr[] = {0x7B, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.Y = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.Y = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -663,8 +769,12 @@ TEST(cpu_nonstd_instr, rraixx) {
   uint8_t instr[] = {0x63, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -681,8 +791,12 @@ TEST(cpu_nonstd_instr, rraixy) {
   uint8_t instr[] = {0x73, 0x00};
   uint8_t mem[0x1000] = {0x01, 0x00, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.Y = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.Y = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -699,8 +813,12 @@ TEST(cpu_nonstd_instr, rrazpg) {
   uint8_t instr[] = {0x67, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -717,8 +835,12 @@ TEST(cpu_nonstd_instr, rrazpx) {
   uint8_t instr[] = {0x77, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x01, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x01;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -735,8 +857,11 @@ TEST(cpu_nonstd_instr, saxabs) {
   uint8_t instr[] = {0x8F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x7F, .regs.X = 0xF7, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x7F;
+  state.regs.X = 0xF7;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -749,8 +874,11 @@ TEST(cpu_nonstd_instr, saxixx) {
   uint8_t instr[] = {0x83, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0xCC};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x8F, .regs.X = 0x01, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x8F;
+  state.regs.X = 0x01;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -763,8 +891,11 @@ TEST(cpu_nonstd_instr, saxzpg) {
   uint8_t instr[] = {0x87, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x7F, .regs.X = 0xF7, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x7F;
+  state.regs.X = 0xF7;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -777,11 +908,12 @@ TEST(cpu_nonstd_instr, saxzpy) {
   uint8_t instr[] = {0x97, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xCC};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {.regs.PC = 0xC000,
-                       .regs.A = 0x7F,
-                       .regs.X = 0xF7,
-                       .regs.Y = 1,
-                       .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x7F;
+  state.regs.X = 0xF7;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -794,8 +926,11 @@ TEST(cpu_nonstd_instr, sloabs) {
   uint8_t instr[] = {0x0F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -812,8 +947,11 @@ TEST(cpu_nonstd_instr, sloabx) {
   uint8_t instr[] = {0x1F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -830,8 +968,11 @@ TEST(cpu_nonstd_instr, sloaby) {
   uint8_t instr[] = {0x1B, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -848,8 +989,11 @@ TEST(cpu_nonstd_instr, sloixx) {
   uint8_t instr[] = {0x03, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -866,8 +1010,11 @@ TEST(cpu_nonstd_instr, sloixy) {
   uint8_t instr[] = {0x13, 0x00};
   uint8_t mem[0x1000] = {0x01, 0x00, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -884,8 +1031,11 @@ TEST(cpu_nonstd_instr, slozpg) {
   uint8_t instr[] = {0x07, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -902,8 +1052,11 @@ TEST(cpu_nonstd_instr, slozpx) {
   uint8_t instr[] = {0x17, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x02};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0x40, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0x40;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -920,8 +1073,11 @@ TEST(cpu_nonstd_instr, sreabs) {
   uint8_t instr[] = {0x4F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -938,8 +1094,11 @@ TEST(cpu_nonstd_instr, sreabx) {
   uint8_t instr[] = {0x5F, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -956,8 +1115,11 @@ TEST(cpu_nonstd_instr, sreaby) {
   uint8_t instr[] = {0x5B, 0x01, 0x00};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -974,8 +1136,12 @@ TEST(cpu_nonstd_instr, sreixx) {
   uint8_t instr[] = {0x43, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0x04, 0x00, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.X = 1, .regs.P = 0, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.X = 1;
+  state.regs.P = 0;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -992,8 +1158,11 @@ TEST(cpu_nonstd_instr, sreixy) {
   uint8_t instr[] = {0x53, 0x00};
   uint8_t mem[0x1000] = {0x01, 0x00, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.Y = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.Y = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -1010,8 +1179,11 @@ TEST(cpu_nonstd_instr, srezpg) {
   uint8_t instr[] = {0x47, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -1028,8 +1200,11 @@ TEST(cpu_nonstd_instr, srezpx) {
   uint8_t instr[] = {0x57, 0x01};
   uint8_t mem[0x1000] = {0xCC, 0xCC, 0xFF};
   test_mem c(instr, ARRAYSIZE(instr), mem, ARRAYSIZE(mem));
-  m6502_state state = {
-      .regs.PC = 0xC000, .regs.A = 0xF7, .regs.X = 1, .cycles = 0};
+  m6502_state state;
+  state.regs.PC = 0xC000;
+  state.regs.A = 0xF7;
+  state.regs.X = 1;
+  state.cycles = 0;
   m6502 cpu(state, &c);
 
   cpu.run(1);
@@ -1041,4 +1216,3 @@ TEST(cpu_nonstd_instr, srezpx) {
   ASSERT_FALSE(cpu.state().regs.P & zero_flag);
   ASSERT_EQ(6, cpu.state().cycles);
 }
-*/
