@@ -2941,5 +2941,11 @@ std::pair<uint8_t, bool> m6502::readu8abx() {
     return std::make_pair(cb_->readu8(addr2), page_crossed);
 }
 
+void m6502::nmi(uint16_t addr) {
+    pushu16(state_.regs.PC);
+    pushu8(state_.regs.S);
+    state_.regs.PC = cb_->readu16(addr);
+}
+
 } // namespace cpu
 } // namespace deeznes

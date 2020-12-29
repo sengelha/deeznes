@@ -1,8 +1,9 @@
 #include <boost/format.hpp>
-#include <cart/nes_cart.h>
+#include <cart/ines_cart.h>
 #include <cassert>
 #include <iostream>
 #include <string.h> // For memcmp
+#include <fstream>
 
 #ifndef ARRAYSIZE
 #define ARRAYSIZE(x) (sizeof(x) / sizeof(x[0]))
@@ -35,7 +36,7 @@ The format of the header is as follows:
 8: Size of PRG RAM in 8 KB units (Value 0 infers 8 KB for compatibility; see PRG
 RAM circuit) 9: Flags 9 10: Flags 10 (unofficial) 11-15: Zero filled
 */
-nes_cart::nes_cart(const char *filename) {
+ines_cart::ines_cart(const char *filename) {
   std::ifstream cartf;
   cartf.open(filename, ios::in | ios::binary);
   if (!cartf.is_open()) {
@@ -54,7 +55,7 @@ nes_cart::nes_cart(const char *filename) {
   cartf.read(prg_rom0_, ARRAYSIZE(prg_rom0_));
 }
 
-uint8_t nes_cart::readu8(uint16_t address) const {
+uint8_t ines_cart::readu8(uint16_t address) const {
   if (address >= 0x8000 && address <= 0xBFFF) {
     return prg_rom0_[address - 0x8000];
   } else if (address >= 0xC000 && address <= 0xFFFF) {
@@ -63,6 +64,10 @@ uint8_t nes_cart::readu8(uint16_t address) const {
     assert(false);
     return 0;
   }
+}
+
+void ines_cart::writeu8(uint16_t address, uint8_t val) {
+  std::cerr << "Warning: Ignorning write to address " << address << "\n";
 }
 
 } // namespace cart

@@ -3,7 +3,6 @@
 #include "console_cpu_binder.h"
 #include "console_ppu_binder.h"
 #include "nes_console_state.h"
-#include <SFML/Graphics.hpp>
 #include <cart/nes_cart.h>
 #include <cpu/m6502.h>
 #include <io/nes_joystick.h>
@@ -23,7 +22,7 @@ class nes_console {
     friend class console_ppu_binder;
     console_ppu_binder ppu_binder_;
     deeznes::ppu::ppu ppu_;
-    std::optional<deeznes::cart::nes_cart> cart_;
+    deeznes::cart::nes_cart* cart_;
     std::optional<deeznes::io::nes_joystick> joy1_;
     std::optional<deeznes::io::nes_joystick> joy2_;
     uint8_t sound_regs_[19];
@@ -33,16 +32,14 @@ class nes_console {
   public:
     nes_console()
         : cpu_binder_(this), cpu_(&cpu_binder_), ppu_binder_(this),
-          ppu_(&ppu_binder_), power_on_(false) {}
+          ppu_(&ppu_binder_), cart_(nullptr), power_on_(false) {}
 
-    void insert_cart(const char *filename);
+    void insert_cart(deeznes::cart::nes_cart* cart);
     void power_on();
     uint_fast32_t run(uint_fast32_t maxcycles);
     void set_state(const nes_console_state &state);
     nes_console_state state() const;
-
-    bool should_draw() const;
-    void draw_to(sf::RenderTarget &tgt);
+    uint8_t cpu_readu8(uint16_t addr);
 
     friend std::ostream &operator<<(std::ostream &os,
                                     const nes_console &console);

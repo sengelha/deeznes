@@ -328,6 +328,7 @@ class m6502 {
     m6502_state state() const { return state_; }
     void set_state(const m6502_state &state) { state_ = state; }
     void set_state(m6502_state &&state) { state_ = std::move(state); }
+    void nmi(uint16_t addr);
 };
 
 } // namespace cpu

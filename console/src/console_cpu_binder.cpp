@@ -1,8 +1,6 @@
-#include <cassert>
 #include <console/console_cpu_binder.h>
 #include <console/nes_console.h>
-#include <iomanip>
-#include <iostream>
+#include <boost/format.hpp>
 
 using namespace std;
 
@@ -29,13 +27,11 @@ uint8_t console_cpu_binder::readu8(uint16_t address) const {
   } else if (address == 0x4017) {
     return console_->joy2_->reg;
   } else if (address >= 0x8000 && address <= 0xFFFF &&
-             console_->cart_.has_value()) {
+             console_->cart_) {
     return console_->cart_->readu8(address);
   } else {
-    std::cerr << "Warning: Unable to read from address $" << hex << setw(4)
-              << setfill('0') << address << '\n';
-    assert(false);
-    return 0xFF;
+    throw std::runtime_error(
+      (boost::format("Unable to read from address $%04X") % address).str());
   }
 }
 
@@ -58,10 +54,12 @@ void console_cpu_binder::writeu8(uint16_t address, uint8_t val) {
     console_->sound_switch_ = val;
   } else if (address == 0x4017) {
     console_->joy2_->reg = val;
+  } else if (address >= 0x4020 && address <= 0xFFFF &&
+             console_->cart_) {
+    console_->cart_->writeu8(address, val);
   } else {
-    std::cerr << "Warning: Unable to write to address $" << hex << setw(4)
-              << setfill('0') << address << '\n';
-    assert(false);
+    throw std::runtime_error(
+      (boost::format("Unable to write to address $%04X") % address).str());
   }
 }
 

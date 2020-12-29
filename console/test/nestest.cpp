@@ -1,9 +1,11 @@
 #include <array>
+#include <cart/ines_cart.h>
 #include <console/nes_console.h>
 #include <cpu/m6502_disassembler.h>
 #include <fstream>
 #include <gtest/gtest.h>
 
+using namespace deeznes::cart;
 using namespace deeznes::console;
 using namespace deeznes::cpu;
 using namespace std;
@@ -152,8 +154,10 @@ static ostream &print_state(ostream &os, nes_console &console) {
 }
 
 TEST(console_rom_tests, nestest) {
+  ines_cart cart("roms/nestest.nes");
+
   nes_console console;
-  console.insert_cart("roms/nestest.nes");
+  console.insert_cart(&cart);
   console.power_on();
 
   // nestest.log tests a specific subroutine of nestest that starts at $C000

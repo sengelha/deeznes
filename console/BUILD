@@ -22,9 +22,7 @@ cc_library(
 
 cc_test(
     name = "console_tests",
-    srcs = [
-        "test/nestest.cpp",
-    ],
+    srcs = glob(["test/*.cpp"]),
     copts = default_copts,
     data = [
         "//roms:nestest.log",

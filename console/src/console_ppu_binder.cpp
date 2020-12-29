@@ -1,11 +1,11 @@
 #include <console/console_ppu_binder.h>
-#include <stdexcept>
+#include <console/nes_console.h>
 
 namespace deeznes {
 namespace console {
 
 void console_ppu_binder::vblank_nmi() {
-    // TODO
+    console_->cpu_.nmi(0xFFFA);
 }
 
 } // namespace console

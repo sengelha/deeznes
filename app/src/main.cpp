@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <boost/format.hpp>
+#include <cart/ines_cart.h>
 #include <console/nes_console.h>
 #include "cpu_display.h"
 #include "instr_display.h"
 
 namespace app = deeznes::app;
+namespace cart = deeznes::cart;
 namespace console = deeznes::console;
 
 const int RENDER_STEP_COUNT = 1000;
@@ -15,8 +17,10 @@ int main(int argc, char *argv[]) {
             (boost::format("Usage: %1% rom.nes") % argv[0]).str());
     }
 
+    cart::ines_cart cart(argv[1]);
+
     console::nes_console c;
-    c.insert_cart(argv[1]);
+    c.insert_cart(&cart);
     c.power_on();
 
     sf::RenderWindow w(sf::VideoMode(1700, 1200), "deeznes");

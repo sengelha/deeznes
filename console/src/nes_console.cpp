@@ -165,8 +165,8 @@ std::ostream &operator<<(std::ostream &os, const nes_console &console) {
     return os;
 }
 
-void nes_console::insert_cart(const char *filename) {
-    cart_ = nes_cart(filename);
+void nes_console::insert_cart(deeznes::cart::nes_cart* cart) {
+    cart_ = cart;
 }
 
 void nes_console::power_on() {
@@ -206,15 +206,8 @@ nes_console_state nes_console::state() const {
     return state;
 }
 
-bool nes_console::should_draw() const {
-    // TODO: Base this on whether we're on the PPU scanline
-    return true;
-}
-
-void nes_console::draw_to(sf::RenderTarget &tgt) {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    tgt.draw(shape);
+uint8_t nes_console::cpu_readu8(uint16_t addr) {
+    return cpu_binder_.readu8(addr);
 }
 
 } // namespace console
