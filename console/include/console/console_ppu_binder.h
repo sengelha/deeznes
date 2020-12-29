@@ -14,6 +14,7 @@ private:
 
 public:
   console_ppu_binder(nes_console *c) : console_(c) {}
+  void vblank_nmi() override final;
 };
 
 } // namespace console

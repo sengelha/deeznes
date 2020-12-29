@@ -31,7 +31,7 @@ void ppu::step() {
         state_.regs.ppustatus |= STATUS_VBLANK_FLAG;
       }
       if (state_.regs.ppuctrl & CTRL1_VBLANK_ENABLE) {
-        // TODO: issue vblank nmi
+        cb_->vblank_nmi();
       }
     }
   } else if (state_.scanline <= 260) {
