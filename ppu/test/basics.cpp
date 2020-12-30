@@ -25,6 +25,7 @@ TEST(ppu_basics, issues_vblank_nmi) {
   {
   public:
     MOCK_METHOD0(vblank_nmi, void());
+    MOCK_CONST_METHOD1(readu8, uint8_t(uint16_t));
   };
 
   ppu_state state;

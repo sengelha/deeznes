@@ -1,16 +1,17 @@
-#include <boost/format.hpp>
 #include <cart/ines_cart.h>
-#include <cassert>
-#include <iostream>
-#include <string.h> // For memcmp
-#include <fstream>
+#include <libc/fstat.h>
+#include <libc/mmap.h>
+#include <libc/open.h>
+#include <libc/sysconf.h>
+#include "mapper_factory.h"
 
 #ifndef ARRAYSIZE
 #define ARRAYSIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
 
-using namespace std;
-using boost::format;
+static constexpr int round_up(int n, int multiple) {
+  return ((n + multiple - 1) / multiple) * multiple;
+}
 
 namespace deeznes {
 namespace cart {
@@ -36,38 +37,45 @@ The format of the header is as follows:
 8: Size of PRG RAM in 8 KB units (Value 0 infers 8 KB for compatibility; see PRG
 RAM circuit) 9: Flags 9 10: Flags 10 (unofficial) 11-15: Zero filled
 */
-ines_cart::ines_cart(const char *filename) {
-  std::ifstream cartf;
-  cartf.open(filename, ios::in | ios::binary);
-  if (!cartf.is_open()) {
-    boost::format fmt = format("Could not open cart file %1%") % filename;
-    throw std::runtime_error(fmt.str());
-  }
-
-  char header[16];
-  cartf.read(header, ARRAYSIZE(header));
-  if (memcmp(header, "NES\x1A", 4) != 0)
+ines_cart::ines_cart(const char *filename)
+{
+  fd_ = libc::open(filename, O_RDONLY, 0);
+  struct stat si;
+  libc::fstat(fd_.get(), &si);
+  cart_ = (uint8_t*)libc::mmap(NULL, round_up(si.st_size, libc::sysconf(_SC_PAGESIZE)), PROT_READ, MAP_FILE | MAP_SHARED, fd_.get(), 0);
+  if (memcmp(cart_, "NES\x1A", 4) != 0)
     throw std::runtime_error("Invalid NES file header");
+  size_ = si.st_size;
 
-  int prg_rom_num_16kb_banks = (int)header[4];
-  if (prg_rom_num_16kb_banks != 1)
-    throw std::runtime_error("Unhandled # of prg rom banks");
-  cartf.read(prg_rom0_, ARRAYSIZE(prg_rom0_));
+  size_t prg_rom_size = 16384 * cart_[4];
+  std::span<uint8_t> prg_rom(cart_ + 16, prg_rom_size);
+  size_t chr_rom_size = 8192 * cart_[5];
+  std::span<uint8_t> chr_rom(cart_ + 16 + prg_rom_size, chr_rom_size);
+  mapper_ = mapper_factory::create((cart_[7] & 0xF0) | (cart_[6] >> 4), prg_rom, chr_rom);
 }
 
-uint8_t ines_cart::readu8(uint16_t address) const {
-  if (address >= 0x8000 && address <= 0xBFFF) {
-    return prg_rom0_[address - 0x8000];
-  } else if (address >= 0xC000 && address <= 0xFFFF) {
-    return prg_rom0_[address - 0xC000];
-  } else {
-    assert(false);
-    return 0;
-  }
+bool ines_cart::has_trainer() const {
+  return (cart_[6] & 0x04);
 }
 
-void ines_cart::writeu8(uint16_t address, uint8_t val) {
-  std::cerr << "Warning: Ignorning write to address " << address << "\n";
+int ines_cart::mapper_number() const {
+  return (cart_[7] & 0xF0) | (cart_[6] >> 4);
+}
+
+int ines_cart::prg_rom_size() const {
+  return 16384 * cart_[4];
+}
+
+int ines_cart::chr_rom_size() const {
+  return 8192 * cart_[5];
+}
+
+uint8_t ines_cart::cpu_readu8(uint16_t offset) const {
+  return mapper_->cpu_readu8(offset);
+}
+
+uint8_t ines_cart::ppu_readu8(uint16_t offset) const {
+  return mapper_->ppu_readu8(offset);
 }
 
 } // namespace cart

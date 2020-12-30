@@ -1,18 +1,28 @@
 #pragma once
 
+#include <cart/cart_data.h>
 #include <cart/nes_cart.h>
+#include <cart/mapper.h>
+#include <libc/unique_fd.h>
+#include <memory>
 
 namespace deeznes {
 namespace cart {
 
 class ines_cart : public nes_cart {
-  char prg_rom0_[16384];
-  char prg_rom1_[16384];
-
+private:
+  deeznes::libc::unique_fd fd_;
+  uint8_t* cart_;
+  off_t size_;
+  std::unique_ptr<mapper> mapper_;
 public:
   ines_cart(const char *filename);
-  uint8_t readu8(uint16_t addr) const override final;
-  void writeu8(uint16_t addr, uint8_t val) override final;
+  bool has_trainer() const;
+  int mapper_number() const;
+  int prg_rom_size() const;
+  int chr_rom_size() const;
+  uint8_t cpu_readu8(uint16_t addr) const override final;
+  uint8_t ppu_readu8(uint16_t addr) const override final;
 };
 
 } // namespace cart

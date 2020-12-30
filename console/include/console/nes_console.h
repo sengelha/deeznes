@@ -40,6 +40,7 @@ class nes_console {
     void set_state(const nes_console_state &state);
     nes_console_state state() const;
     uint8_t cpu_readu8(uint16_t addr);
+    uint8_t ppu_readu8(uint16_t addr);
 
     friend std::ostream &operator<<(std::ostream &os,
                                     const nes_console &console);

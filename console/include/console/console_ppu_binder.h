@@ -14,6 +14,7 @@ private:
 
 public:
   console_ppu_binder(nes_console *c) : console_(c) {}
+  uint8_t readu8(uint16_t addr) const override final;
   void vblank_nmi() override final;
 };
 

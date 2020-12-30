@@ -11,13 +11,13 @@ TEST(console_basics, vblank_nmi) {
   class MockNesCart : public nes_cart
   {
   public:
-    MOCK_CONST_METHOD1(readu8, uint8_t(uint16_t));
-    MOCK_METHOD2(writeu8, void(uint16_t, uint8_t));
+    MOCK_CONST_METHOD1(cpu_readu8, uint8_t(uint16_t));
+    MOCK_CONST_METHOD1(ppu_readu8, uint8_t(uint16_t));
   };
   MockNesCart cart;
-  EXPECT_CALL(cart, readu8(0xC000)).WillRepeatedly(Return(0x02)); // NOPIMP
-  EXPECT_CALL(cart, readu8(0xFFFA)).WillRepeatedly(Return(0x34));
-  EXPECT_CALL(cart, readu8(0xFFFB)).WillRepeatedly(Return(0x12));
+  EXPECT_CALL(cart, cpu_readu8(0xC000)).WillRepeatedly(Return(0x02)); // NOPIMP
+  EXPECT_CALL(cart, cpu_readu8(0xFFFA)).WillRepeatedly(Return(0x34));
+  EXPECT_CALL(cart, cpu_readu8(0xFFFB)).WillRepeatedly(Return(0x12));
 
   nes_console console;
   console.insert_cart(&cart);

@@ -210,5 +210,9 @@ uint8_t nes_console::cpu_readu8(uint16_t addr) {
     return cpu_binder_.readu8(addr);
 }
 
+uint8_t nes_console::ppu_readu8(uint16_t addr) {
+    return ppu_binder_.readu8(addr);
+}
+
 } // namespace console
 } // namespace deeznes
