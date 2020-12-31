@@ -6,17 +6,15 @@ namespace console = deeznes::console;
 namespace deeznes {
 namespace app {
 
-cpu_display::cpu_display(deeznes::console::nes_console& console)
-    : m_console(console)
-{
-    if (!m_font.loadFromFile("fonts/CascadiaCode.ttf"))
-    {
+cpu_display::cpu_display(deeznes::console::nes_console &console)
+    : m_console(console) {
+    if (!m_font.loadFromFile("fonts/CascadiaCode.ttf")) {
         throw std::runtime_error("Could not load fonts/CascadiaCode.ttf");
     }
 }
 
-void cpu_display::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
+void cpu_display::draw(sf::RenderTarget &target,
+                       sf::RenderStates states) const {
     states.transform *= getTransform();
 
     auto state = m_console.state();
@@ -31,16 +29,15 @@ void cpu_display::draw(sf::RenderTarget& target, sf::RenderStates states) const
     lines.push_back(boost::format("CYC: %d") % (int)state.cpu_state.cycles);
 
     int y = 0;
-    for (auto line : lines)
-    {
+    for (auto line : lines) {
         sf::Text text;
         text.setFont(m_font);
         text.setString(line.str());
-        text.setCharacterSize(24);
+        text.setCharacterSize(14);
         text.setPosition(0, y);
         target.draw(text, states);
 
-        y += 30;
+        y += 16;
     }
 }
 

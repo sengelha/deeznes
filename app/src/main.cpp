@@ -1,10 +1,10 @@
+#include "cpu_display.h"
+#include "instr_display.h"
+#include "pat_table_display.h"
 #include <SFML/Graphics.hpp>
 #include <boost/format.hpp>
 #include <cart/ines_cart.h>
 #include <console/nes_console.h>
-#include "cpu_display.h"
-#include "instr_display.h"
-#include "pat_table_display.h"
 
 namespace app = deeznes::app;
 namespace cart = deeznes::cart;
@@ -25,18 +25,18 @@ int main(int argc, char *argv[]) {
     c.insert_cart(&cart);
     c.power_on();
 
-    sf::RenderWindow w(sf::VideoMode(1800, 1600), "deeznes");
-    //w.setVerticalSyncEnabled(true);
+    sf::RenderWindow w(sf::VideoMode(1200, 800), "deeznes");
+    // w.setVerticalSyncEnabled(true);
 
     app::cpu_display cpuDisplay(c);
-    cpuDisplay.setPosition(1500, 0);
-
-    app::instr_display instrDisplay(c);
-    instrDisplay.setPosition(0, 1200);
+    cpuDisplay.setPosition(1000, 0);
 
     app::pat_table_display patTableDisplay(c);
-    patTableDisplay.setPosition(0, 600);
-    patTableDisplay.setScale(4, 4);
+    patTableDisplay.setPosition(0, 350);
+    patTableDisplay.setScale(2, 2);
+
+    app::instr_display instrDisplay(c);
+    instrDisplay.setPosition(0, 610);
 
     bool paused = false;
     bool step = false;
@@ -73,15 +73,13 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        if (step || !paused)
-        {
+        if (step || !paused) {
             c.run(step ? 1 : CYCLE_BATCH_SIZE);
             instrDisplay.update();
             step = false;
         }
 
-        if (--render_counter == 0)
-        {
+        if (--render_counter == 0) {
             w.clear();
             w.draw(cpuDisplay);
             w.draw(instrDisplay);

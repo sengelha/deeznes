@@ -10,12 +10,13 @@ cc_binary(
         "src/*.h",
     ]),
     copts = default_copts,
+    data = [
+        "//fonts:CascadiaCode.ttf",
+    ],
     deps = [
         "//console",
         "@boost//:circular_buffer",
-        "@sfml",
-    ],
-    data = [
-        "//fonts:CascadiaCode.ttf",
+        "@sfml//:sfml_graphics",
+        "@sfml//:sfml_system",
     ],
 )

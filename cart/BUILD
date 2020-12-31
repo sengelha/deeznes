@@ -14,8 +14,8 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//compat",
-        "//libc",
         "@boost//:format",
+        "@boost//:iostreams",
     ],
 )
 
