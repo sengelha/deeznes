@@ -23,6 +23,7 @@ cc_test(
     name = "cart_tests",
     srcs = glob(["test/*.cpp"]),
     data = [
+        "//roms:donkey_kong.nes",
         "//roms:nestest.log",
         "//roms:nestest.nes",
     ],
