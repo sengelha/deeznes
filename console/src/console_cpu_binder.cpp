@@ -30,7 +30,7 @@ uint8_t console_cpu_binder::readu8(uint16_t address) const {
              console_->cart_) {
     return console_->cart_->cpu_readu8(address);
   } else {
-    std::cerr << boost::format("WARNING: CPU unable to read from address $%04X") % address << "\n";
+    //std::cerr << boost::format("WARNING: CPU unable to read from address $%04X") % address << "\n";
     return 0;
   }
 }
@@ -55,7 +55,7 @@ void console_cpu_binder::writeu8(uint16_t address, uint8_t val) {
   } else if (address == 0x4017) {
     console_->joy2_->reg = val;
   } else {
-    std::cerr << boost::format("WARNING: CPU unable to write to address $%04X") % address << "\n";
+    //std::cerr << boost::format("WARNING: CPU unable to write to address $%04X") % address << "\n";
   }
 }
 

@@ -1,4 +1,5 @@
 #include "pat_table_display.h"
+#include "pat_tile.h"
 
 namespace console = deeznes::console;
 
@@ -14,9 +15,21 @@ void pat_table_display::draw(sf::RenderTarget& target, sf::RenderStates states) 
 {
     states.transform *= getTransform();
 
-    for (uint16_t addr = 0x0000; addr <= 0x0FFF; ++addr)
-    {
-        uint8_t val = console_.ppu_readu8(addr);
+    // $0000-$0FFF is 256 tiles, each one is 16 bytes
+    for (int y = 0; y < 16; ++y) {
+        for (int x = 0; x < 16; ++x) {
+            pat_tile tile(console_, 16*y+x);
+            tile.setPosition(x*8, y*8);
+            target.draw(tile, states);
+        }
+    }
+    // $1000-$1FFF is 256 tiles, each one is 16 bytes
+    for (int y = 0; y < 16; ++y) {
+        for (int x = 0; x < 16; ++x) {
+            pat_tile tile(console_, 256 + 16*y+x);
+            tile.setPosition(8*16 + x*8, y*8);
+            target.draw(tile, states);
+        }
     }
 }
 

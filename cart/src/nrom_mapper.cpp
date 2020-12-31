@@ -12,6 +12,8 @@ uint8_t nrom_mapper::cpu_readu8(uint16_t addr) const {
         return prg_rom_[addr - 0x8000];
     } else if (addr >= 0xC000 && addr <= 0xFFFF && prg_rom_.size() == 16384) {
         return prg_rom_[addr - 0xC000];
+    } else if (addr >= 0xC000 && addr <= 0xFFFF && prg_rom_.size() == 32768) {
+        return prg_rom_[addr];
     } else {
         std::cerr
             << boost::format(
@@ -23,7 +25,7 @@ uint8_t nrom_mapper::cpu_readu8(uint16_t addr) const {
 }
 
 uint8_t nrom_mapper::ppu_readu8(uint16_t addr) const {
-    if (addr >= 0x000 && addr <= 0x0FFF) {
+    if (addr >= 0x000 && addr <= 0x1FFF && addr < chr_rom_.size()) {
         return chr_rom_[addr];
     } else {
         std::cerr

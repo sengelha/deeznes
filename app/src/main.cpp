@@ -25,17 +25,18 @@ int main(int argc, char *argv[]) {
     c.insert_cart(&cart);
     c.power_on();
 
-    sf::RenderWindow w(sf::VideoMode(1700, 1200), "deeznes");
+    sf::RenderWindow w(sf::VideoMode(1800, 1600), "deeznes");
     //w.setVerticalSyncEnabled(true);
 
     app::cpu_display cpuDisplay(c);
-    cpuDisplay.setPosition(1300, 0);
+    cpuDisplay.setPosition(1500, 0);
 
     app::instr_display instrDisplay(c);
-    instrDisplay.setPosition(0, 890);
+    instrDisplay.setPosition(0, 1200);
 
     app::pat_table_display patTableDisplay(c);
     patTableDisplay.setPosition(0, 600);
+    patTableDisplay.setScale(4, 4);
 
     bool paused = false;
     bool step = false;
