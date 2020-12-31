@@ -16,7 +16,6 @@ cc_library(
         "//cpu",
         "//io",
         "//ppu",
-        "@sfml",
     ],
 )
 

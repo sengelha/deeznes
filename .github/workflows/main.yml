@@ -29,10 +29,6 @@ jobs:
           mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
           chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
 
-      - name: Install build deps
-        run: |
-          sudo apt-get install -y libx11-dev xorg-dev freeglut3-dev libudev-dev libopenal-dev libvorbis-dev libflac-dev
-
       - name: Build
         run: |
           "${GITHUB_WORKSPACE}/bin/bazel" build //...
