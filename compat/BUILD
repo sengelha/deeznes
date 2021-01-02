@@ -9,6 +9,10 @@ cc_library(
 cc_test(
     name = "compat_tests",
     srcs = glob(["test/*.cpp"]),
+    copts = select({
+        "@platforms//os:windows": ["/std:c++17"],
+        "//conditions:default": ["-std=c++17"],
+    }),
     deps = [
         ":compat",
         "@gtest",

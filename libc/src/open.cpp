@@ -1,4 +1,5 @@
 #include <boost/format.hpp>
+#include <cstring>
 #include <libc/open.h>
 #include <stdexcept>
 #include <stdio.h>

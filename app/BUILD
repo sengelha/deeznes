@@ -13,7 +13,7 @@ cc_binary(
     deps = [
         "//console",
         "@boost//:circular_buffer",
-        "@sfml",
+        "@sfml//:sfml",
     ],
     data = [
         "//fonts:CascadiaCode.ttf",
