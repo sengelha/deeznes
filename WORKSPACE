@@ -25,18 +25,22 @@ load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 boost_deps()
 # End boost
 
-# Begin rules_foreign_cc
-http_archive(
-    name = "rules_foreign_cc",
-    sha256 = "3c6445404e9e5d17fa0ecdef61be00dd93b20222c11f45e146a98c0a3f67defa",
-    strip_prefix = "rules_foreign_cc-d54c78ab86b40770ee19f0949db9d74a831ab9f0",
-    url = "https://github.com/bazelbuild/rules_foreign_cc/archive/d54c78ab86b40770ee19f0949db9d74a831ab9f0.zip",
+# Begin rules_sfml
+git_repository(
+    name = "com_github_sengelha_rules_sfml",
+    commit = "d13eac5ed8ba6f6058f1fcf144103ac6d795ba52",
+    remote = "https://github.com/sengelha/rules_sfml",
+    shallow_since = "1609535242 -0600",
 )
 
-load("@rules_foreign_cc//:workspace_definitions.bzl", "rules_foreign_cc_dependencies")
+load("@com_github_sengelha_rules_sfml//sfml:deps.bzl", "rules_sfml_deps")
 
-rules_foreign_cc_dependencies()
-# End rules_foreign_cc
+rules_sfml_deps()
+
+load("@com_github_sengelha_rules_sfml//sfml:sfml.bzl", "rules_sfml_setup")
+
+rules_sfml_setup()
+# End rules_sfml
 
 # Begin gtest
 http_archive(
@@ -46,13 +50,3 @@ http_archive(
     url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
 )
 # End gtest
-
-# Begin SFML
-http_archive(
-    name = "sfml",
-    build_file = "third_party/sfml.BUILD",
-    sha256 = "bf1e0643acb92369b24572b703473af60bac82caf5af61e77c063b779471bb7f",
-    strip_prefix = "SFML-2.5.1",
-    url = "https://www.sfml-dev.org/files/SFML-2.5.1-sources.zip",
-)
-# End SFML

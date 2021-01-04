@@ -1,13 +1,9 @@
 #pragma once
 
+#include <iterator>
 #include <type_traits>
 
 namespace std {
-
-template <class T, std::size_t N>
-constexpr std::size_t size(const T (&array)[N]) noexcept {
-    return N;
-}
 
 template <typename T> class span {
   public:
