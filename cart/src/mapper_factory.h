@@ -11,8 +11,8 @@ namespace cart {
 class mapper_factory {
   public:
     static std::unique_ptr<mapper> create(int mapper_number,
-                                          std::span<uint8_t> prg_rom,
-                                          std::span<uint8_t> chr_rom);
+                                          std::span<const char> prg_rom,
+                                          std::span<const char> chr_rom);
 };
 
 } // namespace cart
